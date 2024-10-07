@@ -1,3 +1,4 @@
 .env
 .venv
 /pycache
+task_manager/__pycache__/
