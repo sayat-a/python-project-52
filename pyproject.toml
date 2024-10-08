@@ -12,6 +12,7 @@ packages = [
 python = ">=3.10,<4.0"
 django = "^5.1.1"
 python-dotenv = "^1.0.1"
+django-bootstrap5 = "^24.3"
 
 
 [build-system]
