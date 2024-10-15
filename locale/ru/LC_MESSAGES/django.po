@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-16 01:03+0500\n"
+"POT-Creation-Date: 2024-10-16 01:13+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,6 +80,16 @@ msgstr "Вход"
 msgid "Sign-up"
 msgstr "Регистрация"
 
+#: task_manager/templates/index.html:7
+#, fuzzy
+#| msgid "Task manager"
+msgid "Hello! It's Task manager"
+msgstr "Привет! Это - Менеджер задач"
+
+#: task_manager/templates/index.html:8
+msgid "Please signup or login to use it's options"
+msgstr "Пожалуйста, зарегистрируйтесь или авторизуйтесь, чтобы воспользоваться его возможностями"
+
 #: task_manager/templates/signup.html:33
 msgid "Your password must contain at least 3 characters."
 msgstr "Ваш пароль должен содержать как минимум 3 символа."
@@ -99,7 +109,7 @@ msgstr "Дата создания"
 #: task_manager/validator.py:9 task_manager/validator.py:14
 msgid ""
 "The password you entered is too short. It must contain at least 3 characters."
-msgstr ""
+msgstr "Введённый пароль слишком короткий. Он должен содержать как минимум 3 символа."
 
 #: task_manager/views.py:20
 msgid "User is signed up successfully."
