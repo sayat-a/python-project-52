@@ -8,17 +8,17 @@
             {% csrf_token %}
             <div class="form-group mb-3">
                 <label class="form-label d-block" for="id_first_name">{{ form.first_name.label }}</label>
-                <input type="text" name="first_name" placeholder="{% trans 'First Name' %}" maxlength="150" autofocus required id="id_first_name" class="form-control {% if form.first_name.errors %}is-invalid{% elif form.first_name.value %}is-valid{% endif %}">
+                <input type="text" name="first_name" value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}" placeholder="{% trans 'First Name' %}" maxlength="150" autofocus required id="id_first_name" class="form-control {% if form.first_name.errors %}is-invalid{% elif form.first_name.value %}is-valid{% endif %}">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label d-block" for="id_last_name">{{ form.last_name.label }}</label>
-                <input type="text" name="last_name" placeholder="{% trans 'Last Name' %}" maxlength="150" autofocus required id="id_last_name" class="form-control {% if form.last_name.errors %}is-invalid{% elif form.last_name.value %}is-valid{% endif %}">
+                <input type="text" name="last_name" value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}" placeholder="{% trans 'Last Name' %}" maxlength="150" autofocus required id="id_last_name" class="form-control {% if form.last_name.errors %}is-invalid{% elif form.last_name.value %}is-valid{% endif %}">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label d-block" for="id_username">{{ form.username.label }}</label>
-                <input type="text" name="username" placeholder="{% trans 'Username' %}" maxlength="150" autofocus required id="id_username" class="form-control {% if form.username.errors %}is-invalid{% elif form.username.value %}is-valid{% endif %}">
+                <input type="text" name="username" value="{% if form.username.value %}{{ form.username.value }}{% endif %}" placeholder="{% trans 'Username' %}" maxlength="150" autofocus required id="id_username" class="form-control {% if form.username.errors %}is-invalid{% elif form.username.value %}is-valid{% endif %}">
                 <div class="form-text">{% trans "Required field. No more than 150 characters. Only letters, numbers and symbols @/./+/-/_." %}</div>
                 <div class="invalid-feedback">
                     {% if form.username.errors %}
