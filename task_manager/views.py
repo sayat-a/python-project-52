@@ -59,7 +59,7 @@ def user_update(request, pk):
     if not request.user.is_authenticated:
         messages.error(
             request,
-            gettext("Вы не авторизованы! Пожалуйста, выполните вход."))
+            gettext("You're not authenticated! Please, log in."))
         return redirect('/login/')
     user = get_object_or_404(User, pk=pk)
     if request.user != user:
@@ -83,7 +83,7 @@ def user_delete(request, pk):
     if not request.user.is_authenticated:
         messages.error(
             request,
-            gettext("Вы не авторизованы! Пожалуйста, выполните вход."))
+            gettext("You're not authenticated! Please, log in."))
         return redirect('/login/')
     user = get_object_or_404(User, pk=pk)
     if request.user != user:
