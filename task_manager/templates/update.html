@@ -8,7 +8,7 @@
         {% csrf_token %}
         <div class="form-group mb-3">
             <label class="form-label d-block" for="id_first_name">{{ form.first_name.label }}</label>
-            <input type="text" name="first_name" value="{{ form.first_name.value }}" maxlength="150" id="id_first_name" class="form-control {% if form.first_name.errors %}is-invalid{% elif form.first_name.value %}is-valid{% endif %}">
+            {{ form.first_name }}
             <div class="invalid-feedback">
                 {% if form.first_name.errors %}
                     {{ form.first_name.errors.0 }}
@@ -18,7 +18,7 @@
 
         <div class="form-group mb-3">
             <label class="form-label d-block" for="id_last_name">{{ form.last_name.label }}</label>
-            <input type="text" name="last_name" value="{{ form.last_name.value }}" maxlength="150" id="id_last_name" class="form-control {% if form.last_name.errors %}is-invalid{% elif form.last_name.value %}is-valid{% endif %}">
+            <input type="text" name="last_name" value="{{ form.last_name.value }}" maxlength="255" id="id_last_name" class="form-control {% if form.last_name.errors %}is-invalid{% elif form.last_name.value %}is-valid{% endif %}">
             <div class="invalid-feedback">
                 {% if form.last_name.errors %}
                     {{ form.last_name.errors.0 }}
