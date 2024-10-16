@@ -3,3 +3,4 @@
 /pycache
 task_manager/__pycache__/
 task_manager/tests/__pycache__/
+__pycache__
