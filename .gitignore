@@ -2,3 +2,4 @@
 .venv
 /pycache
 task_manager/__pycache__/
+task_manager/tests/__pycache__/
