@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
+from django.contrib.messages import constants as messages
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,7 +31,9 @@ ALLOWED_HOSTS = ['webserver',
                  '127.0.0.1',
                  'python-project-52-0v1o.onrender.com']
 
-
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',  # Перенаправляем 'error' на 'danger'
+}
 # Application definition
 
 INSTALLED_APPS = [
