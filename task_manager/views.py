@@ -56,11 +56,23 @@ def logout_view(request):
 
 
 def user_update(request, pk):
+    if not request.user.is_authenticated:
+        messages.error(
+            request,
+            gettext("Вы не авторизованы! Пожалуйста, выполните вход."))
+        return redirect('/login/')
     user = get_object_or_404(User, pk=pk)
+    if request.user != user:
+        messages.error(
+            request,
+            gettext("You do not have permission to modify another user."))
+        return redirect('/users/')
     if request.method == 'POST':
         form = UserUpdateForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
+            login(request, user)
+            messages.success(request, gettext("User is updated successfully!"))
             return redirect('/users/')
     else:
         form = UserUpdateForm(instance=user)
@@ -68,7 +80,17 @@ def user_update(request, pk):
 
 
 def user_delete(request, pk):
+    if not request.user.is_authenticated:
+        messages.error(
+            request,
+            gettext("Вы не авторизованы! Пожалуйста, выполните вход."))
+        return redirect('/login/')
     user = get_object_or_404(User, pk=pk)
+    if request.user != user:
+        messages.error(
+            request,
+            gettext("You do not have permission to delete another user."))
+        return redirect('/users/')
     if request.method == 'POST':
         user.delete()
         messages.info(request, gettext("User is deleted successfully!"))
