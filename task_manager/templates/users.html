@@ -11,6 +11,7 @@
                 <th>{% translate "Username" %}</th>
                 <th>{% translate "Full Name" %}</th>
                 <th>{% translate "Creation Date" %}</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,10 @@
                 <td>{{ user.username }}</td>
                 <td>{{ user.first_name }} {{ user.last_name }}</td>
                 <td>{{ user.date_joined }}</td>
+                <td>
+                    <a href="{% url 'user_update' user.id %}" class="btn btn-sm btn-primary">{% translate "Update" %}</a>
+                    <a href="{% url 'user_delete' user.id %}" class="btn btn-sm btn-danger">{% translate "Delete" %}</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
