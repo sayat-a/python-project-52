@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+    <h1>{% translate "Delete User" %}</h1>
+    <p>{% translate "Are you sure you want to delete this user?" %} <strong>{{ user.username }}</strong></p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">{% translate "Delete" %}</button>
+        <a href="{% url 'users' %}" class="btn btn-secondary">{% translate "Cancel" %}</a>
+    </form>
+</div>
+{% endblock %}
