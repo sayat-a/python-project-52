@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic import ListView   
@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.utils.translation import gettext
-from task_manager.forms import SignUpForm
+from task_manager.forms import SignUpForm, UserUpdateForm
 
 
 class SignUpView(CreateView):
@@ -53,3 +53,24 @@ def logout_view(request):
     logout(request)
     messages.info(request, gettext('You have logged out.'))
     return redirect('index')
+
+
+def user_update(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('/users/')
+    else:
+        form = UserUpdateForm(instance=user)
+    return render(request, 'update.html', {'form': form})
+
+
+def user_delete(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        user.delete()
+        messages.info(request, gettext("User is deleted successfully!"))
+        return redirect('users')
+    return render(request, 'delete.html', {'user': user})
