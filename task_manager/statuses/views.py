@@ -21,7 +21,8 @@ def status_create(request):
         form = StatusForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, gettext("Status successfully created"))
+            messages.success(request,
+                             gettext("Status is successfully created"))
             return redirect('statuses_list')
     else:
         form = StatusForm()
