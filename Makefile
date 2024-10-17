@@ -6,3 +6,9 @@ runserver:
 
 test:
 	poetry run python3 manage.py test
+
+translate:
+	poetry run django-admin makemessages -l ru
+
+complile_translation:
+	poetry run python manage.py compilemessages
