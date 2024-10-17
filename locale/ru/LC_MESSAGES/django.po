@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-17 15:48+0500\n"
+"POT-Creation-Date: 2024-10-17 16:19+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,6 +30,14 @@ msgstr "Имя"
 #: task_manager/statuses/views.py:25
 msgid "Status is successfully created"
 msgstr "Статус успешно создан"
+
+#: task_manager/statuses/views.py:41
+msgid "Status is successfully updated"
+msgstr "Статус успешно изменен"
+
+#: task_manager/statuses/views.py:60
+msgid "Status is successfully deleted"
+msgstr "Статус успешно удален"
 
 #: task_manager/templates/base.html:23
 msgid "Task manager"
@@ -94,6 +102,23 @@ msgstr "Имя пользователя"
 msgid "Password"
 msgstr "Пароль"
 
+#: task_manager/templates/statuses/status_delete.html:6
+msgid "Delete Status"
+msgstr "Удаление статуса"
+
+#: task_manager/templates/statuses/status_delete.html:7
+msgid "Are you sure you want to delete"
+msgstr "Вы уверены, что хотите удалить"
+
+#: task_manager/templates/statuses/status_delete.html:10
+msgid "Yes, delete"
+msgstr "Да, удалить"
+
+#: task_manager/templates/statuses/status_delete.html:11
+#: task_manager/templates/users/delete.html:12
+msgid "Cancel"
+msgstr "Отмена"
+
 #: task_manager/templates/statuses/status_form.html:6
 msgid "Edit Status"
 msgstr "Изменение статуса"
@@ -136,10 +161,6 @@ msgstr "Удаление пользователя"
 #: task_manager/templates/users/delete.html:7
 msgid "Are you sure you want to delete this user?"
 msgstr "Вы уверены, что хотите удалить пользователя"
-
-#: task_manager/templates/users/delete.html:12
-msgid "Cancel"
-msgstr "Отмена"
 
 #: task_manager/templates/users/signup.html:11
 #: task_manager/templates/users/update.html:11 task_manager/users/forms.py:12
