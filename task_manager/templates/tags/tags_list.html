@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+    <h1>{% translate "Tags" %}</h1>
+    <a href="{% url 'tag_create' %}" class="btn btn-primary">{% translate "Create tag" %}</a>
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>{% translate "Name" %}</th>
+                <th>{% translate "Creation date" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tag in tags %}
+                <tr>
+                    <td>{{ tag.id }}</td>
+                    <td>{{ tag.name }}</td>
+                    <td>{{ tag.created_at }}</td>
+                    <td>
+                        <a href="{% url 'tag_update' tag.id %}" class="btn btn-primary btn-sm">{% translate "Edit" %}</a>
+                        <a href="{% url 'tag_delete' tag.id %}" class="btn btn-danger btn-sm">{% translate "Delete" %}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
