@@ -117,7 +117,7 @@ msgstr "Создать"
 
 #: task_manager/templates/statuses/statuses_list.html:7
 msgid "Create status"
-msgstr "ДСоздать статус"
+msgstr "Создать статус"
 
 #: task_manager/templates/statuses/statuses_list.html:13
 msgid "Creation date"
