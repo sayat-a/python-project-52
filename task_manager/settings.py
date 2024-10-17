@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_bootstrap5',
+    'task_manager',
+    'task_manager.users',
+    'task_manager.statuses',
 ]
 
 MIDDLEWARE = [
@@ -94,7 +97,7 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'task_manager.validator.SimplePasswordValidator',
+        'NAME': 'task_manager.users.validator.SimplePasswordValidator',
     },
 ]
 
