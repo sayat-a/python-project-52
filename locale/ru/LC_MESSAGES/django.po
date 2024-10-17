@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-17 15:25+0500\n"
+"POT-Creation-Date: 2024-10-17 15:41+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,20 +20,14 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: task_manager/statuses/forms.py:14
-#, fuzzy
-#| msgid "Statuses"
-msgid "status name"
-msgstr "Статусы"
-
-#: task_manager/statuses/models.py:9
+#: task_manager/statuses/forms.py:14 task_manager/statuses/models.py:9
 #: task_manager/templates/statuses/statuses_list.html:12
 msgid "Name"
 msgstr "Имя"
 
-#: task_manager/statuses/views.py:24
+#: task_manager/statuses/views.py:25
 msgid "Status is successfully created"
-msgstr ""
+msgstr "Статус успешно создан"
 
 #: task_manager/templates/base.html:23
 msgid "Task manager"
@@ -247,3 +241,8 @@ msgstr ""
 #: task_manager/views.py:30
 msgid "You have logged out."
 msgstr "Вы разлогинены"
+
+#, fuzzy
+#~| msgid "Statuses"
+#~ msgid "status name"
+#~ msgstr "Статусы"
