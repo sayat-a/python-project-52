@@ -11,5 +11,5 @@ class StatusForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
         }
         labels = {
-            'name': gettext('status name'),
+            'name': gettext('Name'),
         }
