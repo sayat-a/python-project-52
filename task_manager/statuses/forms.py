@@ -8,7 +8,9 @@ class StatusForm(forms.ModelForm):
         model = Status
         fields = [('name')]
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': gettext('Name')}),
         }
         labels = {
             'name': gettext('Name'),
