@@ -48,11 +48,11 @@ def status_update(request, pk):
 @login_required
 def status_delete(request, pk):
     status = get_object_or_404(Status, pk=pk)
-    # if status.task_set.exists():
-    #    messages.error(
-    #        request,
-    #        gettext("Cannot delete status because it is in use"))
-    #    return redirect('statuses_list')
+    if status.task_set.exists():
+        messages.error(
+            request,
+            gettext("Cannot delete status because it is in use"))
+        return redirect('statuses_list')
     if request.method == 'POST':
         status.delete()
         messages.success(
