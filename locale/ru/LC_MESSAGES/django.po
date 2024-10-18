@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-18 14:07+0500\n"
+"POT-Creation-Date: 2024-10-18 16:07+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: task_manager/statuses/forms.py:13 task_manager/statuses/forms.py:16
 #: task_manager/statuses/models.py:9 task_manager/tags/forms.py:13
-#: task_manager/tags/forms.py:16
+#: task_manager/tags/forms.py:16 task_manager/tasks/forms.py:15
 #: task_manager/templates/statuses/status_form.html:10
 #: task_manager/templates/statuses/statuses_list.html:12
 #: task_manager/templates/tags/tags_list.html:12
@@ -37,6 +37,10 @@ msgstr "Статус успешно создан"
 #: task_manager/statuses/views.py:41
 msgid "Status is successfully updated"
 msgstr "Статус успешно изменен"
+
+#: task_manager/statuses/views.py:54
+msgid "Cannot delete status because it is in use"
+msgstr "Невозможно удалить статус, потому что он используется"
 
 #: task_manager/statuses/views.py:60
 msgid "Status is successfully deleted"
@@ -54,9 +58,18 @@ msgstr "Метка успешно создана"
 msgid "Tag is successfully updated"
 msgstr "Метка успешно изменена"
 
+#: task_manager/tags/views.py:54
+msgid "Cannot delete tag because it is in use"
+msgstr "Невозможно удалить метку, потому что она используется"
+
 #: task_manager/tags/views.py:60
 msgid "Tag is successfully deleted"
 msgstr "Метка успешно удалена"
+
+#: task_manager/tasks/forms.py:20
+#: task_manager/templates/tasks/task_form.html:20
+msgid "Description"
+msgstr "Описание"
 
 #: task_manager/tasks/views.py:26
 msgid "Task is successfully created"
@@ -270,10 +283,6 @@ msgstr "Создать задачу"
 msgid "Task Name"
 msgstr "Имя"
 
-#: task_manager/templates/tasks/task_form.html:20
-msgid "Description"
-msgstr "Описание"
-
 #: task_manager/templates/tasks/task_form.html:62
 msgid "Update Task"
 msgstr "Изменение задачи"
@@ -354,29 +363,33 @@ msgid ""
 msgstr ""
 "Введённый пароль слишком короткий. Он должен содержать как минимум 3 символа."
 
-#: task_manager/users/views.py:21
+#: task_manager/users/views.py:22
 msgid "User is signed up successfully."
 msgstr "Пользователь успешно зарегистрирован"
 
-#: task_manager/users/views.py:38 task_manager/users/views.py:62
+#: task_manager/users/views.py:39 task_manager/users/views.py:63
 msgid "You're not authenticated! Please, log in."
 msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
 
-#: task_manager/users/views.py:44
+#: task_manager/users/views.py:45
 msgid "You do not have permission to modify another user."
 msgstr "У вас нет прав для изменения другого пользователя."
 
-#: task_manager/users/views.py:51
+#: task_manager/users/views.py:52
 msgid "User is updated successfully!"
 msgstr "Пользователь успешно изменен"
 
-#: task_manager/users/views.py:68
+#: task_manager/users/views.py:69
 msgid "You do not have permission to delete another user."
 msgstr "У вас нет прав для изменения другого пользователя."
 
-#: task_manager/users/views.py:72
+#: task_manager/users/views.py:74
 msgid "User is deleted successfully!"
 msgstr "Пользователь успешно удален"
+
+#: task_manager/users/views.py:78
+msgid "Cannot delete user because it is in use"
+msgstr "Невозможно удалить пользователя, потому что он используется"
 
 #: task_manager/views.py:18
 msgid "You have logged in."
