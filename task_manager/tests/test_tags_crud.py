@@ -43,4 +43,4 @@ class TagCRUDTest(TestCase):
         response = self.client.post(reverse('tag_delete', args=[tag.id]))
 
         self.assertEqual(response.status_code, 302)
-        # self.assertFalse(Tag.objects.filter(id=tag.id).exists())
+        self.assertFalse(Tag.objects.filter(id=tag.id).exists())
