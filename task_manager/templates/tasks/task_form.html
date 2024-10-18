@@ -47,11 +47,11 @@
         </div>
 
         <div class="form-group mb-3">
-            <label for="id_tags" class="form-label d-block">{% trans "Tags" %}</label>
-            {{ form.tags }}
-            {% if form.tags.errors %}
+            <label for="id_labels" class="form-label d-block">{% trans "Labels" %}</label>
+            {{ form.labels }}
+            {% if form.labels.errors %}
                 <div class="invalid-feedback d-block">
-                    {{ form.tags.errors }}
+                    {{ form.labels.errors }}
                 </div>
             {% endif %}
         </div>
