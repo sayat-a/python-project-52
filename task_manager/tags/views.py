@@ -48,11 +48,11 @@ def tag_update(request, pk):
 @login_required
 def tag_delete(request, pk):
     tag = get_object_or_404(Tag, pk=pk)
-    # if tag.task_set.exists():
-    #    messages.error(
-    #        request,
-    #        gettext("Cannot delete tag because it is in use"))
-    #    return redirect('tags_list')
+    if tag.task_set.exists():
+        messages.error(
+            request,
+            gettext("Cannot delete tag because it is in use"))
+        return redirect('tags_list')
     if request.method == 'POST':
         tag.delete()
         messages.success(
