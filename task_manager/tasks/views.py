@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
 from django.contrib import messages
 from django.utils.translation import gettext
 from task_manager.tasks.models import Task
