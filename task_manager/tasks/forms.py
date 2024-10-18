@@ -6,7 +6,7 @@ from django.utils.translation import gettext
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['name', 'description', 'status', 'executor', 'tags']
+        fields = ['name', 'description', 'status', 'executor', 'labels']
 
         widgets = {
             'name': forms.TextInput(
@@ -20,7 +20,7 @@ class TaskForm(forms.ModelForm):
                     'placeholder': gettext('Description')}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'executor': forms.Select(attrs={'class': 'form-control'}),
-            'tags': forms.SelectMultiple(
+            'labels': forms.SelectMultiple(
                 attrs={
                     'class': 'form-control',
                     'size': 4}),
