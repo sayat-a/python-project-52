@@ -7,6 +7,7 @@ from django.utils.translation import gettext
 from django.contrib.auth.models import User
 from task_manager.users.forms import SignUpForm, UserUpdateForm
 from django.contrib.auth import login
+from django.db.models import ProtectedError
 
 
 # Create your views here.
@@ -68,7 +69,14 @@ def user_delete(request, pk):
             gettext("You do not have permission to delete another user."))
         return redirect('/users/')
     if request.method == 'POST':
-        user.delete()
-        messages.info(request, gettext("User is deleted successfully!"))
+        try:
+            user.delete()
+            messages.info(request, gettext("User is deleted successfully!"))
+        except ProtectedError:
+            messages.error(
+                request,
+                gettext("Cannot delete user because it is in use"))
+            return redirect('users')
         return redirect('users')
+
     return render(request, 'users/delete.html', {'user': user})
