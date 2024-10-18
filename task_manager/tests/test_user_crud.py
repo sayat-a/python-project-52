@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 
 class UserCRUDTests(TestCase):
-    fixtures = ['task_manager/tests/users/fixtures/users_fixture.json']
+    fixtures = ['task_manager/tests/fixtures/users_fixture.json']
 
     def setUp(self):
         self.create_url = reverse('signup')
