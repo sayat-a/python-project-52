@@ -1,11 +1,11 @@
 from django import forms
 from django.utils.translation import gettext
-from task_manager.tags.models import Tag
+from task_manager.labels.models import Label
 
 
-class TagForm(forms.ModelForm):
+class LabelForm(forms.ModelForm):
     class Meta:
-        model = Tag
+        model = Label
         fields = [('name')]
         widgets = {
             'name': forms.TextInput(attrs={
