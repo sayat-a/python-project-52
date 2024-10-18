@@ -43,4 +43,4 @@ class StatusCRUDTest(TestCase):
         response = self.client.post(reverse('status_delete', args=[status.id]))
 
         self.assertEqual(response.status_code, 302)
-        # self.assertFalse(Status.objects.filter(id=status.id).exists())
+        self.assertFalse(Status.objects.filter(id=status.id).exists())
