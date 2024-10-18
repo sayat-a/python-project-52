@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-3">
+    <h2>{% if form.instance.pk %}{% trans "Edit Task" %}{% else %}{% trans "Create Task" %}{% endif %}</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="id_name" class="form-label d-block">{% trans "Task Name" %}</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.name.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="id_description" class="form-label d-block">{% trans "Description" %}</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.description.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="id_status" class="form-label d-block">{% trans "Status" %}</label>
+            {{ form.status }}
+            {% if form.status.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.status.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="id_executor" class="form-label d-block">{% trans "Executor" %}</label>
+            {{ form.executor }}
+            {% if form.executor.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.executor.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="id_tags" class="form-label d-block">{% trans "Tags" %}</label>
+            {{ form.tags }}
+            {% if form.tags.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.tags.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group mb-3">
+            <button type="submit" class="btn btn-primary">
+                {% if form.instance.pk %}
+                    {% trans "Update Task" %}
+                {% else %}
+                    {% trans "Create Task" %}
+                {% endif %}
+            </button>
+            <a href="{% url 'tasks_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
