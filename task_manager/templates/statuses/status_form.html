@@ -7,7 +7,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" placeholder="{% translate 'Name' %}" class="btn btn-primary">{% if form.instance.pk %}{% translate "Update" %}{% else %}{% translate "Create" %}{% endif %}</button>
+        <button type="submit" class="btn btn-primary">{% if form.instance.pk %}{% translate "Update" %}{% else %}{% translate "Create" %}{% endif %}</button>
     </form>
 </div>
 {% endblock %}
