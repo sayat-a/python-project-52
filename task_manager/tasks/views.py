@@ -2,46 +2,23 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils.translation import gettext
-from django.contrib.auth.models import User
+from django_filters.views import FilterView
 from task_manager.tasks.models import Task
-from task_manager.labels.models import Label
-from task_manager.statuses.models import Status
 from task_manager.tasks.forms import TaskForm
+from task_manager.tasks.filter import TaskFilter
 
 
 # Create your views here.
-@login_required
-def tasks_list(request):
-    tasks = Task.objects.all()
-    status_id = request.GET.get('status')
-    executor_id = request.GET.get('executor')
-    label_id = request.GET.get('label')
-    self_tasks = request.GET.get('self_tasks')
+class TaskListView(FilterView):
+    model = Task
+    filterset_class = TaskFilter
+    template_name = 'tasks/tasks_list.html'
+    context_object_name = 'tasks'
 
-    if status_id:
-        tasks = tasks.filter(status_id=status_id)
-
-    if executor_id:
-        tasks = tasks.filter(executor_id=executor_id)
-
-    if label_id:
-        tasks = tasks.filter(labels__id=label_id)
-
-    if self_tasks:
-        tasks = tasks.filter(executor=request.user)
-
-    statuses = Status.objects.all()
-    executors = User.objects.all()
-    labels = Label.objects.all()
-
-    context = {
-        'tasks': tasks,
-        'statuses': statuses,
-        'executors': executors,
-        'labels': labels
-    }
-
-    return render(request, 'tasks/tasks_list.html', context)
+    def get_filter(self, filterset_class):
+        filterset = super().get_filterset(filterset_class)
+        filterset.request = self.request
+        return filterset
 
 
 @login_required
