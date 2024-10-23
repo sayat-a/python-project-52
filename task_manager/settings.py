@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['webserver',
                  '127.0.0.1',
                  'python-project-52-0v1o.onrender.com']
 
+CSRF_TRUSTED_ORIGINS = ['https://python-project-52-0v1o.onrender.com']
+
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',  # Перенаправляем 'error' на 'danger'
 }
