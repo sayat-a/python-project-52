@@ -12,10 +12,10 @@
                     <div class="form-group">
                         {% if field.name == "filter_own_tasks" %}
                             <label for="{{ field.id_for_label }}">
-                                {{ field }} {{ field.label_tag }}
+                                {{ field }} <label class="form-check-label" for="id_self_tasks">Только свои задачи</label>
                             </label>
                         {% else %}
-                            {{ field.label_tag }}
+                            <label class="form-label" for="id_label">{{ field.label }}</label>
                             {{ field }}
                         {% endif %}
                     </div>
