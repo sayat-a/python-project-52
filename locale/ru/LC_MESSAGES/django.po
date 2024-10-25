@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 01:52+0500\n"
+"POT-Creation-Date: 2024-10-25 12:10+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -228,15 +228,15 @@ msgstr "Удалить"
 #: task_manager/templates/users/signup.html:21
 #: task_manager/templates/users/update.html:31
 #: task_manager/templates/users/users_list.html:11
-#: task_manager/users/forms.py:22 task_manager/users/forms.py:24
+#: task_manager/users/forms.py:23 task_manager/users/forms.py:33
 msgid "Username"
 msgstr "Имя пользователя"
 
 #: task_manager/templates/login.html:14
 #: task_manager/templates/users/signup.html:32
-#: task_manager/templates/users/update.html:42 task_manager/users/forms.py:28
-#: task_manager/users/forms.py:29 task_manager/users/forms.py:49
-#: task_manager/users/forms.py:51
+#: task_manager/templates/users/update.html:42 task_manager/users/forms.py:37
+#: task_manager/users/forms.py:38 task_manager/users/forms.py:58
+#: task_manager/users/forms.py:60
 msgid "Password"
 msgstr "Пароль"
 
@@ -306,14 +306,14 @@ msgid "Delete User"
 msgstr "Удаление пользователя"
 
 #: task_manager/templates/users/signup.html:11
-#: task_manager/templates/users/update.html:11 task_manager/users/forms.py:12
-#: task_manager/users/forms.py:13
+#: task_manager/templates/users/update.html:11 task_manager/users/forms.py:13
+#: task_manager/users/forms.py:14
 msgid "First Name"
 msgstr "Имя"
 
 #: task_manager/templates/users/signup.html:16
-#: task_manager/templates/users/update.html:21 task_manager/users/forms.py:17
-#: task_manager/users/forms.py:18
+#: task_manager/templates/users/update.html:21 task_manager/users/forms.py:18
+#: task_manager/users/forms.py:19
 msgid "Last Name"
 msgstr "Фамилия"
 
@@ -332,9 +332,9 @@ msgid "Your password must contain at least 3 characters."
 msgstr "Ваш пароль должен содержать как минимум 3 символа."
 
 #: task_manager/templates/users/signup.html:45
-#: task_manager/templates/users/update.html:55 task_manager/users/forms.py:33
-#: task_manager/users/forms.py:35 task_manager/users/forms.py:57
-#: task_manager/users/forms.py:59
+#: task_manager/templates/users/update.html:55 task_manager/users/forms.py:42
+#: task_manager/users/forms.py:44 task_manager/users/forms.py:66
+#: task_manager/users/forms.py:68
 msgid "Confirm Password"
 msgstr "Подтверждение пароля"
 
@@ -359,7 +359,13 @@ msgstr "Полное имя"
 msgid "Creation Date"
 msgstr "Дата создания"
 
-#: task_manager/users/forms.py:81
+#: task_manager/users/forms.py:29
+msgid ""
+"Insert right username. It may contain only letters, numbers, and @/./+/-/_ "
+"characters."
+msgstr "Введите правильное имя пользователя. Оно может содержать только буквы, цифры и знаки @/./+/-/_."
+
+#: task_manager/users/forms.py:90
 msgid "Passwords are not equal."
 msgstr "Введенные пароли не совпадают."
 
