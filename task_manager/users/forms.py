@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.contrib.auth.password_validation import validate_password
 
 
@@ -21,6 +22,14 @@ class SignUpForm(UserCreationForm):
         max_length=150,
         label=gettext("Username"),
         required=True,
+        validators=[
+            RegexValidator(
+                regex=r'^[\w.@+-]+$',
+                message=gettext(
+                    'Insert right username. It may contain only letters, '
+                    'numbers, and @/./+/-/_ characters.'),
+            )
+        ],
         widget=forms.TextInput(attrs={'placeholder': gettext('Username')})
     )
 
