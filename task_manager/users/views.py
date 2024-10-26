@@ -9,9 +9,9 @@ from task_manager.users.forms import SignUpForm, UserUpdateForm
 from task_manager.users.views_services import (
     is_authenticated_,
     has_permission,
-    run_update_post_request
+    run_update_post_request,
+    run_delete_post_request
     )
-from django.db.models import ProtectedError
 
 
 # Create your views here.
@@ -50,26 +50,11 @@ def user_update(request, pk):
 
 
 def user_delete(request, pk):
-    if not request.user.is_authenticated:
-        messages.error(
-            request,
-            gettext("You're not authenticated! Please, log in."))
+    if not is_authenticated_(request):
         return redirect('/login/')
     user = get_object_or_404(User, pk=pk)
-    if request.user != user:
-        messages.error(
-            request,
-            gettext("You do not have permission to delete another user."))
+    if not has_permission(request, user):
         return redirect('/users/')
     if request.method == 'POST':
-        try:
-            user.delete()
-            messages.info(request, gettext("User is deleted successfully!"))
-        except ProtectedError:
-            messages.error(
-                request,
-                gettext("Cannot delete user because it is in use"))
-            return redirect('users')
-        return redirect('users')
-
+        return run_delete_post_request(request, user)
     return render(request, 'users/delete.html', {'user': user})
