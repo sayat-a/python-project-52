@@ -6,7 +6,11 @@ from django.contrib import messages
 from django.utils.translation import gettext
 from django.contrib.auth.models import User
 from task_manager.users.forms import SignUpForm, UserUpdateForm
-from django.contrib.auth import login
+from task_manager.users.views_services import (
+    is_authenticated_,
+    has_permission,
+    run_update_post_request
+    )
 from django.db.models import ProtectedError
 
 
@@ -33,24 +37,13 @@ class UsersListView(ListView):
 
 
 def user_update(request, pk):
-    if not request.user.is_authenticated:
-        messages.error(
-            request,
-            gettext("You're not authenticated! Please, log in."))
+    if not is_authenticated_(request):
         return redirect('/login/')
     user = get_object_or_404(User, pk=pk)
-    if request.user != user:
-        messages.error(
-            request,
-            gettext("You do not have permission to modify another user."))
+    if not has_permission(request, user):
         return redirect('/users/')
     if request.method == 'POST':
-        form = UserUpdateForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            login(request, user)
-            messages.success(request, gettext("User is updated successfully!"))
-            return redirect('/users/')
+        return run_update_post_request(request, user)
     else:
         form = UserUpdateForm(instance=user)
     return render(request, 'users/update.html', {'form': form})
