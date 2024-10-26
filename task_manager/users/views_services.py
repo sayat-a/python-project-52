@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.utils.translation import gettext
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
+from django.db.models import ProtectedError
 from task_manager.users.forms import UserUpdateForm
 
 
@@ -33,3 +34,15 @@ def run_update_post_request(request, user):
         messages.success(request, gettext("User is updated successfully!"))
         return redirect('/users/')
     return render(request, 'users/update.html', {'form': form})
+
+
+def run_delete_post_request(request, user):
+    try:
+        user.delete()
+        messages.info(request, gettext("User is deleted successfully!"))
+    except ProtectedError:
+        messages.error(
+            request,
+            gettext("Cannot delete user because it is in use"))
+        return redirect('users')
+    return redirect('users')
