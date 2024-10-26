@@ -78,16 +78,9 @@ class UserUpdateForm(forms.ModelForm):
         cleaned_data = super().clean()
         password1 = cleaned_data.get("password1")
         password2 = cleaned_data.get("password2")
-        if password1:
-            try:
-                validate_password(password1, self.instance)
-            except ValidationError as e:
-                self.add_error('password2', e)
-
-        if password1 and password2:
-            if password1 != password2:
-                self.add_error('password2',
-                               gettext("Passwords are not equal."))
+        self._validate_password_strength(password1)
+        self._check_passwords_match(password1, password2)
+        return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -97,3 +90,14 @@ class UserUpdateForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+    def _validate_password_strength(self, password):
+        if password:
+            try:
+                validate_password(password, self.instance)
+            except ValidationError as e:
+                self.add_error('password2', e)
+
+    def _check_passwords_match(self, password1, password2):
+        if password1 and password2 and password1 != password2:
+            self.add_error('password2', gettext("Passwords are not equal."))
