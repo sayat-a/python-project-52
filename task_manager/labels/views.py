@@ -13,7 +13,7 @@ def labels_list(request):
     return render(request,
                   'labels/labels_list.html',
                   {'labels': labels})
-    
+
 
 @login_required
 def label_create(request):
