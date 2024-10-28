@@ -6,7 +6,10 @@
     <h1>{% if form.instance.pk %}{% translate "Edit Label" %}{% else %}{% translate "Create Label" %}{% endif %}</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="form-group mb-3">
+            <label for="id_name" class="form-label d-block">{% trans "Name" %}</label>
+            {{ form.name }}
+        </div>
         <button type="submit" class="btn btn-primary">{% if form.instance.pk %}{% translate "Update" %}{% else %}{% translate "Create" %}{% endif %}</button>
     </form>
 </div>
