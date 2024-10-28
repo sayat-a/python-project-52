@@ -132,7 +132,7 @@ msgstr "Задачи"
 
 #: task_manager/templates/base.html:30
 msgid "Logout"
-msgstr "Выйти"
+msgstr "Выход"
 
 #: task_manager/templates/base.html:32 task_manager/templates/login.html:6
 msgid "Login"
