@@ -1,13 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.utils.translation import gettext
 from django_filters.views import FilterView
 from task_manager.tasks.models import Task
 from task_manager.tasks.forms import TaskForm
 from task_manager.tasks.filter import TaskFilter
-from task_manager.statuses.models import Status
 
 
 # Create your views here.
@@ -36,8 +34,6 @@ def task_create(request):
             return redirect('tasks_list')
     else:
         form = TaskForm()
-        form.fields['status'].queryset = Status.objects.all()
-        form.fields['executor'].queryset = User.objects.all()
     return render(request, 'tasks/task_form.html', {'form': form})
 
 
