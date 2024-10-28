@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-28 11:48+0500\n"
+"POT-Creation-Date: 2024-10-28 12:04+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,7 +23,9 @@ msgstr ""
 #: task_manager/labels/forms.py:13 task_manager/labels/forms.py:16
 #: task_manager/statuses/forms.py:13 task_manager/statuses/forms.py:16
 #: task_manager/statuses/models.py:9 task_manager/tasks/forms.py:15
+#: task_manager/templates/labels/label_form.html:10
 #: task_manager/templates/labels/labels_list.html:12
+#: task_manager/templates/statuses/status_form.html:10
 #: task_manager/templates/statuses/statuses_list.html:12
 #: task_manager/templates/tasks/tasks_list.html:31
 msgid "Name"
@@ -187,15 +189,15 @@ msgstr "Изменить метку"
 msgid "Create Label"
 msgstr "Создать метку"
 
-#: task_manager/templates/labels/label_form.html:10
-#: task_manager/templates/statuses/status_form.html:10
+#: task_manager/templates/labels/label_form.html:13
+#: task_manager/templates/statuses/status_form.html:13
 #: task_manager/templates/tasks/task_detail.html:45
 #: task_manager/templates/users/users_list.html:25
 msgid "Update"
 msgstr "Изменить"
 
-#: task_manager/templates/labels/label_form.html:10
-#: task_manager/templates/statuses/status_form.html:10
+#: task_manager/templates/labels/label_form.html:13
+#: task_manager/templates/statuses/status_form.html:13
 msgid "Create"
 msgstr "Создать"
 
