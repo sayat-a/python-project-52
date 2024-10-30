@@ -11,7 +11,7 @@
     {% bootstrap_javascript %}
     {% load i18n %}
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <header class="p-3 bg-light text-white">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -48,5 +48,9 @@
     </div>
     {% endif %}
     {% block content %}{% endblock %}
+    <footer class="mt-auto bg-light py-3 w-100">
+        <p class="text-center text-muted">&copy; Designed and developed by Sayat Aubakirov, 2024</p>
+        <p class="text-center text-muted">Follow my projects on <a href='https://github.com/sayat-a'>github</a></p>
+    </footer>
 </body>
 </html>
