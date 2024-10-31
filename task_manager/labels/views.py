@@ -1,64 +1,54 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from task_manager.labels.models import Label
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext
 from task_manager.labels.forms import LabelForm
+from task_manager.common_views_services import (
+    object_list,
+    object_create,
+    object_update,
+    object_delete
+)
 
 
 # Create your views here.
-@login_required
 def labels_list(request):
-    labels = Label.objects.all()
-    return render(request,
-                  'labels/labels_list.html',
-                  {'labels': labels})
+    return object_list(
+        request,
+        Label,
+        'labels/labels_list.html',
+        'labels'
+    )
 
 
-@login_required
 def label_create(request):
-    if request.method == 'POST':
-        form = LabelForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request,
-                             gettext("Label is successfully created"))
-            return redirect('labels_list')
-    else:
-        form = LabelForm()
-    return render(request, 'labels/label_form.html', {'form': form})
+    return object_create(
+        request,
+        LabelForm,
+        'labels/label_form.html',
+        'labels_list',
+        gettext("Label is successfully created")
+    )
 
 
-@login_required
 def label_update(request, pk):
-    label = get_object_or_404(Label, pk=pk)
-    if request.method == 'POST':
-        form = LabelForm(request.POST, instance=label)
-        if form.is_valid():
-            form.save()
-            messages.success(
-                request,
-                gettext("Label is successfully updated"))
-            return redirect('labels_list')
-    else:
-        form = LabelForm(instance=label)
-    return render(request, 'labels/label_form.html', {'form': form})
+    return object_update(
+        request,
+        pk,
+        Label,
+        LabelForm,
+        'labels/label_form.html',
+        'labels_list',
+        gettext("Label is successfully updated")
+    )
 
 
-@login_required
 def label_delete(request, pk):
-    label = get_object_or_404(Label, pk=pk)
-    if label.task_set.exists():
-        messages.error(
-            request,
-            gettext("Cannot delete label because it is in use"))
-        return redirect('labels_list')
-    if request.method == 'POST':
-        label.delete()
-        messages.success(
-            request,
-            gettext("Label is successfully deleted"))
-        return redirect('labels_list')
-    return render(request,
-                  'labels/label_delete.html',
-                  {'label': label})
+    return object_delete(
+        request,
+        pk,
+        Label,
+        'labels/label_delete.html',
+        'labels_list',
+        gettext("Label is successfully deleted"),
+        gettext("Cannot delete label because it is in use"),
+        'task_set'
+    )
