@@ -5,7 +5,10 @@ from task_manager.common_views_services import (
     object_list,
     object_create,
     object_update,
-    object_delete
+    object_delete,
+    DeleteConfig,
+    CreateConfig,
+    UpdateConfig
 )
 
 
@@ -20,35 +23,33 @@ def labels_list(request):
 
 
 def label_create(request):
-    return object_create(
-        request,
-        LabelForm,
-        'labels/label_form.html',
-        'labels_list',
-        gettext("Label is successfully created")
+    config = CreateConfig(
+        form_class=LabelForm,
+        template_name='labels/label_form.html',
+        success_url='labels_list',
+        success_message=gettext("Label is successfully created")
     )
+    return object_create(request, config)
 
 
 def label_update(request, pk):
-    return object_update(
-        request,
-        pk,
-        Label,
-        LabelForm,
-        'labels/label_form.html',
-        'labels_list',
-        gettext("Label is successfully updated")
+    config = UpdateConfig(
+        model=Label,
+        form_class=LabelForm,
+        template_name='labels/label_form.html',
+        success_url='labels_list',
+        success_message=gettext("Label is successfully updated")
     )
+    return object_update(request, pk, config)
 
 
 def label_delete(request, pk):
-    return object_delete(
-        request,
-        pk,
-        Label,
-        'labels/label_delete.html',
-        'labels_list',
-        gettext("Label is successfully deleted"),
-        gettext("Cannot delete label because it is in use"),
-        'task_set'
+    config = DeleteConfig(
+        model=Label,
+        template_name='labels/label_delete.html',
+        success_url='labels_list',
+        success_message=gettext("Label is successfully deleted"),
+        in_use_message=gettext("Cannot delete label because it is in use"),
+        related_field='task_set'
     )
+    return object_delete(request, pk, config)
