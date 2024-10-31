@@ -12,6 +12,3 @@ translate:
 
 complile_translation:
 	poetry run python manage.py compilemessages
-
-test-coverage:
-	poetry run pytest --cov --cov-report xml
