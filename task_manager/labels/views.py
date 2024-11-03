@@ -1,55 +1,53 @@
 from task_manager.labels.models import Label
+from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.contrib import messages
 from django.utils.translation import gettext
+from django.contrib.messages.views import SuccessMessageMixin
 from task_manager.labels.forms import LabelForm
-from task_manager.common_views_services import (
-    object_list,
-    object_create,
-    object_update,
-    object_delete,
-    DeleteConfig,
-    CreateConfig,
-    UpdateConfig
-)
+from django.views.generic import (
+    CreateView,
+    ListView,
+    UpdateView,
+    DeleteView
+    )
 
 
 # Create your views here.
-def labels_list(request):
-    return object_list(
-        request,
-        Label,
-        'labels/labels_list.html',
-        'labels'
-    )
+class LabelListView(ListView):
+    model = Label
+    template_name = 'labels/labels_list.html'
+    context_object_name = 'labels'
 
 
-def label_create(request):
-    config = CreateConfig(
-        form_class=LabelForm,
-        template_name='labels/label_form.html',
-        success_url='labels_list',
-        success_message=gettext("Label is successfully created")
-    )
-    return object_create(request, config)
+class LabelCreateView(SuccessMessageMixin, CreateView):
+    model = Label
+    template_name = 'labels/label_form.html'
+    form_class = LabelForm
+    success_url = reverse_lazy('labels_list')
+    success_message = gettext("Label is successfully created")
 
 
-def label_update(request, pk):
-    config = UpdateConfig(
-        model=Label,
-        form_class=LabelForm,
-        template_name='labels/label_form.html',
-        success_url='labels_list',
-        success_message=gettext("Label is successfully updated")
-    )
-    return object_update(request, pk, config)
+class LabelUpdateView(SuccessMessageMixin, UpdateView):
+    model = Label
+    template_name = 'labels/label_form.html'
+    form_class = LabelForm
+    success_url = reverse_lazy('labels_list')
+    success_message = gettext("Label is successfully updated")
 
 
-def label_delete(request, pk):
-    config = DeleteConfig(
-        model=Label,
-        template_name='labels/label_delete.html',
-        success_url='labels_list',
-        success_message=gettext("Label is successfully deleted"),
-        in_use_message=gettext("Cannot delete label because it is in use"),
-        related_field='task_set'
-    )
-    return object_delete(request, pk, config)
+class LabelDeleteView(SuccessMessageMixin, DeleteView):
+    model = Label
+    template_name = 'labels/label_delete.html'
+    success_url = reverse_lazy('labels_list')
+    success_message = gettext("Label is successfully deleted")
+
+    def form_valid(self, form):
+        if self.get_object().task_set.exists():
+            messages.error(
+                self.request,
+                gettext("Cannot delete label because it is in use")
+            )
+            return redirect(self.success_url)
+        response = super().form_valid(form)
+        return response
