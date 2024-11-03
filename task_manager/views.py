@@ -1,31 +1,33 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
+from django.shortcuts import render
 from django.utils.translation import gettext
+from django.urls import reverse_lazy
 
 
 def index(request):
     return render(request, 'index.html')
 
 
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            messages.success(request, gettext('You have logged in.'))
-            return redirect('index')
-        else:
-            messages.error(request,
-                           gettext(
-                               'Please insert right username and password. '
-                               'Both fields may be case sensitive'))
-    return render(request, 'login.html')
+class CustomLoginView(LoginView):
+    template_name = 'login.html'
+    next_page = 'index'
+    redirect_authenticated_user = True
+
+    def form_valid(self, form):
+        messages.success(self.request, gettext('You have logged in.'))
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, gettext(
+            'Please insert the correct username and password. '
+            'Both fields may be case sensitive.'))
+        return super().form_invalid(form)
 
 
-def logout_view(request):
-    logout(request)
-    messages.info(request, gettext('You have logged out.'))
-    return redirect('index')
+class CustomLogoutView(LogoutView):
+    next_page = reverse_lazy('index')
+
+    def dispatch(self, request, *args, **kwargs):
+        messages.info(request, gettext('You have logged out.'))
+        return super().dispatch(request, *args, **kwargs)

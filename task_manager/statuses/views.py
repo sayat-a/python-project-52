@@ -1,55 +1,53 @@
 from task_manager.statuses.models import Status
+from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.contrib import messages
 from django.utils.translation import gettext
+from django.contrib.messages.views import SuccessMessageMixin
 from task_manager.statuses.forms import StatusForm
-from task_manager.common_views_services import (
-    object_list,
-    object_create,
-    object_update,
-    object_delete,
-    DeleteConfig,
-    UpdateConfig,
-    CreateConfig
-)
+from django.views.generic import (
+    CreateView,
+    ListView,
+    UpdateView,
+    DeleteView
+    )
 
 
 # Create your views here.
-def statuses_list(request):
-    return object_list(
-        request,
-        Status,
-        'statuses/statuses_list.html',
-        'statuses'
-    )
+class StatusListView(ListView):
+    model = Status
+    template_name = 'statuses/statuses_list.html'
+    context_object_name = 'statuses'
 
 
-def status_create(request):
-    config = CreateConfig(
-        form_class=StatusForm,
-        template_name='statuses/status_form.html',
-        success_url='statuses_list',
-        success_message=gettext("Status is successfully created")
-    )
-    return object_create(request, config)
+class StatusCreateView(SuccessMessageMixin, CreateView):
+    model = Status
+    template_name = 'statuses/status_form.html'
+    form_class = StatusForm
+    success_url = reverse_lazy('statuses_list')
+    success_message = gettext("Status is successfully created")
 
 
-def status_update(request, pk):
-    config = UpdateConfig(
-        model=Status,
-        form_class=StatusForm,
-        template_name='statuses/status_form.html',
-        success_url='statuses_list',
-        success_message=gettext("Status is successfully updated")
-    )
-    return object_update(request, pk, config)
+class StatusUpdateView(SuccessMessageMixin, UpdateView):
+    model = Status
+    template_name = 'statuses/status_form.html'
+    form_class = StatusForm
+    success_url = reverse_lazy('statuses_list')
+    success_message = gettext("Status is successfully updated")
 
 
-def status_delete(request, pk):
-    config = DeleteConfig(
-        model=Status,
-        template_name='statuses/status_delete.html',
-        success_url='statuses_list',
-        success_message=gettext("Status is successfully deleted"),
-        in_use_message=gettext("Cannot delete status because it is in use"),
-        related_field='task_set'
-    )
-    return object_delete(request, pk, config)
+class StatusDeleteView(SuccessMessageMixin, DeleteView):
+    model = Status
+    template_name = 'statuses/status_delete.html'
+    success_url = reverse_lazy('statuses_list')
+    success_message = gettext("Status is successfully deleted")
+
+    def form_valid(self, form):
+        if self.get_object().task_set.exists():
+            messages.error(
+                self.request,
+                gettext("Cannot delete status because it is in use")
+            )
+            return redirect(self.success_url)
+        response = super().form_valid(form)
+        return response
