@@ -18,7 +18,7 @@ class TaskFilter(django_filters.FilterSet):
     executor = django_filters.ModelChoiceFilter(
         queryset=User.objects.all(),
         label=gettext("Executor"),
-        widget=widgets.Select(attrs={'class': 'form-select ml-2 mr-3 mb-3'})
+        widget=widgets.Select(attrs={'class': 'form-select ml-2 mr-3 mb-3'}),
     )
 
     label = django_filters.ModelChoiceFilter(
