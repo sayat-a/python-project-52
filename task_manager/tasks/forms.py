@@ -18,6 +18,13 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['name', 'description', 'status', 'executor', 'labels']
+        labels = {
+            'name': gettext("Name"),
+            'description': gettext("Description"),
+            'status': gettext("Status"),
+            'executor': gettext("Executor"),
+            'labels': gettext("Labels"),
+        }
         widgets = {
             'name': forms.TextInput(
                 attrs={

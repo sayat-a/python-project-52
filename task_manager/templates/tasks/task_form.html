@@ -1,60 +1,12 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n django_bootstrap5%}
 
 {% block content %}
 <div class="container mt-3">
     <h2>{% if form.instance.pk %}{% trans "Edit Task" %}{% else %}{% trans "Create Task" %}{% endif %}</h2>
     <form method="post" novalidate>
         {% csrf_token %}
-        <div class="form-group mb-3">
-            <label for="id_name" class="form-label d-block">{% trans "Task Name" %}</label>
-            {{ form.name }}
-            {% if form.name.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.name.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="id_description" class="form-label d-block">{% trans "Description" %}</label>
-            {{ form.description }}
-            {% if form.description.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.description.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="id_status" class="form-label d-block">{% trans "Status" %}</label>
-            {{ form.status }}
-            {% if form.status.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.status.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="id_executor" class="form-label d-block">{% translate "Executor" %}</label>
-            {{ form.executor }}
-            {% if form.executor.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.executor.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="id_labels" class="form-label d-block">{% trans "Labels" %}</label>
-            {{ form.labels }}
-            {% if form.labels.errors %}
-                <div class="invalid-feedback d-block">
-                    {{ form.labels.errors }}
-                </div>
-            {% endif %}
-        </div>
+        {% bootstrap_form form layout='vertical' %}
 
         <div class="form-group mb-3">
             <button type="submit" class="btn btn-primary">
