@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n django_bootstrap5 %}
 
 {% block content %}
 <div class="container">
@@ -8,18 +8,8 @@
     <div class="card mb-3 mt-3">
         <div class="card-body bg-light">
             <form method="get">
-                {% for field in filter.form %}
-                    <div class="form-group">
-                        {% if field.name == "filter_own_tasks" %}
-                            <label for="{{ field.id_for_label }}">
-                                {{ field }} <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            </label>
-                        {% else %}
-                            <label class="form-label" for="id_label">{{ field.label }}</label>
-                            {{ field }}
-                        {% endif %}
-                    </div>
-                {% endfor %}
+                {% csrf_token %}
+                {% bootstrap_form filter.form layout='vertical' %}
                 <button type="submit" class="btn btn-primary">{% translate "Show" %}</button>
             </form>
         </div>
