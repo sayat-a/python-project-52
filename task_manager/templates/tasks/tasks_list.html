@@ -9,7 +9,26 @@
         <div class="card-body bg-light">
             <form method="get">
                 {% csrf_token %}
-                {% bootstrap_form filter.form layout='vertical' %}
+                {% for field in filter.form %}
+                    <div class="form-group">
+                        {% if field.name == "executor" %}
+                        {{ field.label }}
+                        <select name="{{ field.name }}" class="form-select ml-2 mr-3 mb-3">
+                            <option value="">---------</option>
+                            {% for user in filter.executor_queryset %}
+                                <option value="{{ user.id }}">{{ user.get_full_name }}</option>
+                            {% endfor %}
+                        </select>
+                        {% elif field.name == "filter_own_tasks" %}
+                        <label for="{{ field.id_for_label }}">
+                            {{ field }} <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        </label>
+                        {% else %}
+                            {{ field.label }}
+                            {{ field }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
                 <button type="submit" class="btn btn-primary">{% translate "Show" %}</button>
             </form>
         </div>
