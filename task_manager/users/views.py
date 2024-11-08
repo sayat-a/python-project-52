@@ -7,25 +7,37 @@ from django.views.generic import (
     DeleteView
     )
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.utils.translation import gettext
+from django.utils.translation import gettext as _
 from django.contrib.auth.models import User
 from task_manager.users.forms import SignUpForm, UserUpdateForm
 from django.db.models import ProtectedError
 
 
 # Create your views here.
-class SignUpView(CreateView):
+class CustomLoginRequiredMixin(LoginRequiredMixin):
+    permission_denied_message = _("You're not authenticated! Please, log in.")
+    permission_check_message = _(
+        "You do not have permission to modify another user."
+    )
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, self.permission_denied_message)
+            return redirect('login')
+        if hasattr(self, 'get_object') and self.get_object() != request.user:
+            messages.error(request, self.permission_check_message)
+            return redirect('users')
+        return super().dispatch(request, *args, **kwargs)
+
+
+class SignUpView(SuccessMessageMixin, CreateView):
     form_class = SignUpForm
     template_name = 'users/signup.html'
     success_url = reverse_lazy('login')
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        messages.success(self.request,
-                         gettext('User is signed up successfully.'))
-        return response
+    success_message = _('User is signed up successfully.')
 
 
 class UsersListView(ListView):
@@ -37,64 +49,42 @@ class UsersListView(ListView):
         return User.objects.all().order_by('id')
 
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
+class UserUpdateView(
+    CustomLoginRequiredMixin,
+    SuccessMessageMixin,
+    UpdateView
+):
     model = User
     form_class = UserUpdateForm
     template_name = 'users/update.html'
     success_url = reverse_lazy('users')
+    success_message = _("User is updated successfully!")
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.instance = self.request.user
         return form
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(
-                request,
-                gettext("You're not authenticated! Please, log in."))
-            return redirect('login')
-        if self.get_object() != request.user:
-            messages.error(request, gettext(
-                "You do not have permission to modify another user."))
-            return redirect('users')
-        return super().dispatch(request, *args, **kwargs)
-
     def form_valid(self, form):
         response = super().form_valid(form)
         login(self.request, self.object)
-        messages.success(self.request, gettext(
-            "User is updated successfully!"))
         return response
 
 
-class UserDeleteView(LoginRequiredMixin, DeleteView):
+class UserDeleteView(CustomLoginRequiredMixin, DeleteView):
     model = User
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users')
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(
-                request,
-                gettext("You're not authenticated! Please, log in."))
-            return redirect('login')
-        if self.get_object() != request.user:
-            messages.error(
-                request,
-                gettext("You do not have permission to modify another user."))
-            return redirect('users')
-        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         try:
             response = super().form_valid(form)
             messages.info(
                 self.request,
-                gettext("User is deleted successfully!"))
+                _("User is deleted successfully!"))
             return response
         except ProtectedError:
             messages.error(
                 self.request,
-                gettext("Cannot delete user because it is in use"))
+                _("Cannot delete user because it is in use"))
             return redirect(self.success_url)
