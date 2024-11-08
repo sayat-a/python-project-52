@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models import Value
 from django.db.models.functions import Concat
 from django.forms import widgets
-from django.utils.translation import gettext
+from django.utils.translation import gettext as _
 from task_manager.tasks.models import Task
 from task_manager.labels.models import Label
 from task_manager.statuses.models import Status
@@ -13,25 +13,25 @@ from task_manager.statuses.models import Status
 class TaskFilter(django_filters.FilterSet):
     status = django_filters.ModelChoiceFilter(
         queryset=Status.objects.all(),
-        label=gettext("Status"),
+        label=_("Status"),
         widget=widgets.Select(attrs={'class': 'form-select ml-2 mr-3 mb-3'})
     )
 
     executor = django_filters.ModelChoiceFilter(
         queryset=User.objects.all(),
-        label=gettext("Executor"),
+        label=_("Executor"),
         widget=widgets.Select(attrs={'class': 'form-select ml-2 mr-3 mb-3'}),
     )
 
     label = django_filters.ModelChoiceFilter(
         queryset=Label.objects.all(),
-        label=gettext("Label"),
+        label=_("Label"),
         widget=widgets.Select(attrs={'class': 'form-select ml-2 mr-3 mb-3'}),
         field_name='labels'
     )
 
     filter_own_tasks = django_filters.BooleanFilter(
-        label=gettext("Only own tasks"),
+        label=_("Only own tasks"),
         method='filter_by_author',
         widget=forms.CheckboxInput(
             attrs={'class': 'form-check-input mr-3 mb-4'})
