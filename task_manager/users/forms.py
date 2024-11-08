@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.utils.translation import gettext
+from django.utils.translation import gettext as _
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.contrib.auth.password_validation import validate_password
@@ -10,38 +10,38 @@ from django.contrib.auth.password_validation import validate_password
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(
         max_length=255,
-        label=gettext("First Name"),
-        widget=forms.TextInput(attrs={'placeholder': gettext('First Name')})
+        label=_("First Name"),
+        widget=forms.TextInput(attrs={'placeholder': _('First Name')})
     )
     last_name = forms.CharField(
         max_length=255,
-        label=gettext("Last Name"),
-        widget=forms.TextInput(attrs={'placeholder': gettext('Last Name')})
+        label=_("Last Name"),
+        widget=forms.TextInput(attrs={'placeholder': _('Last Name')})
     )
     username = forms.CharField(
         max_length=150,
-        label=gettext("Username"),
+        label=_("Username"),
         required=True,
         validators=[
             RegexValidator(
                 regex=r'^[\w.@+-]+$',
-                message=gettext(
+                message=_(
                     'Insert right username. It may contain only letters, '
                     'numbers, and @/./+/-/_ characters.'),
             )
         ],
-        widget=forms.TextInput(attrs={'placeholder': gettext('Username')})
+        widget=forms.TextInput(attrs={'placeholder': _('Username')})
     )
 
     password1 = forms.CharField(
-        label=gettext("Password"),
-        widget=forms.PasswordInput(attrs={'placeholder': gettext('Password')})
+        label=_("Password"),
+        widget=forms.PasswordInput(attrs={'placeholder': _('Password')})
     )
 
     password2 = forms.CharField(
-        label=gettext("Confirm Password"),
+        label=_("Confirm Password"),
         widget=forms.PasswordInput(attrs={
-            'placeholder': gettext('Confirm Password')})
+            'placeholder': _('Confirm Password')})
     )
 
     class Meta:
@@ -55,17 +55,17 @@ class SignUpForm(UserCreationForm):
 
 class UserUpdateForm(forms.ModelForm):
     password1 = forms.CharField(
-        label=gettext("Password"),
+        label=_("Password"),
         widget=forms.PasswordInput(attrs={
-            'placeholder': gettext("Password"),
+            'placeholder': _("Password"),
             'class': 'form-control'}),
         required=True
     )
 
     password2 = forms.CharField(
-        label=gettext("Confirm Password"),
+        label=_("Confirm Password"),
         widget=forms.PasswordInput(attrs={
-            'placeholder': gettext("Confirm Password"),
+            'placeholder': _("Confirm Password"),
             'class': 'form-control'}),
         required=True
     )
@@ -100,4 +100,4 @@ class UserUpdateForm(forms.ModelForm):
 
     def _check_passwords_match(self, password1, password2):
         if password1 and password2 and password1 != password2:
-            self.add_error('password2', gettext("Passwords are not equal."))
+            self.add_error('password2', _("Passwords are not equal."))
