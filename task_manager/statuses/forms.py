@@ -1,5 +1,5 @@
 from django import forms
-from django.utils.translation import gettext
+from django.utils.translation import gettext as _
 from task_manager.statuses.models import Status
 
 
@@ -10,8 +10,8 @@ class StatusForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': gettext('Name')}),
+                'placeholder': _('Name')}),
         }
         labels = {
-            'name': gettext('Name'),
+            'name': _('Name'),
         }
