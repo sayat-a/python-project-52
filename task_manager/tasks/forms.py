@@ -1,6 +1,6 @@
 from django import forms
 from task_manager.tasks.models import Task
-from django.utils.translation import gettext
+from django.utils.translation import gettext as _
 from django.contrib.auth.models import User
 
 
@@ -19,21 +19,21 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['name', 'description', 'status', 'executor', 'labels']
         labels = {
-            'name': gettext("Name"),
-            'description': gettext("Description"),
-            'status': gettext("Status"),
-            'executor': gettext("Executor"),
-            'labels': gettext("Labels"),
+            'name': _("Name"),
+            'description': _("Description"),
+            'status': _("Status"),
+            'executor': _("Executor"),
+            'labels': _("Labels"),
         }
         widgets = {
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': gettext('Name')}),
+                    'placeholder': _('Name')}),
             'description': forms.Textarea(
                 attrs={
                     'class': 'form-control',
-                    'rows': 10, 'placeholder': gettext('Description')}),
+                    'rows': 10, 'placeholder': _('Description')}),
             'status': forms.Select(
                 attrs={
                     'class': 'form-control'}),
