@@ -9,7 +9,9 @@ class Task(models.Model):
     name = models.CharField(max_length=255, unique=True, blank=False)
     description = models.TextField(blank=False)
     status = models.ForeignKey(Status, blank=False, on_delete=models.PROTECT)
-    executor = models.ForeignKey(CustomUser, blank=False, on_delete=models.PROTECT)
+    executor = models.ForeignKey(
+        CustomUser, blank=False, on_delete=models.PROTECT
+    )
     labels = models.ManyToManyField(Label, blank=True)
     creator = models.ForeignKey(
         CustomUser, on_delete=models.PROTECT, related_name='created_tasks')
