@@ -14,19 +14,17 @@ class UserCRUDTests(TestCase):
         self.User = get_user_model()
 
     def test_user_registration(self):
-        """Тест регистрации пользователя (Create)"""
         response = self.client.post(self.create_url, {
             'first_name': 'Vasya',
             'last_name': 'Vasechkin',
             'username': 'Vasyan',
-            'password1': 'password',
-            'password2': 'password',
+            'password1': 'QaSwOrd47',
+            'password2': 'QaSwOrd47',
         })
         self.assertEqual(response.status_code, 302)
         self.assertTrue(self.User.objects.filter(username='Vasyan').exists())
 
     def test_user_update(self):
-        """Тест обновления пользователя (Update)"""
         login = self.client.login(username='testuser', password='password')
         self.assertTrue(login)
 
@@ -41,9 +39,9 @@ class UserCRUDTests(TestCase):
         self.assertEqual(response.status_code, 302)
         user = self.User.objects.get(pk=1)
         self.assertEqual(user.first_name, 'Petr')
+        self.assertTrue(user.check_password('newpassword123'))
 
     def test_user_deletion(self):
-        """Тест удаления пользователя (Delete)"""
         login = self.client.login(username='testuser', password='password')
         self.assertTrue(login)
         response = self.client.post(self.delete_url)
