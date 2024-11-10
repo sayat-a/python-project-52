@@ -1,7 +1,7 @@
 from django import forms
 from task_manager.tasks.models import Task
 from django.utils.translation import gettext as _
-from django.contrib.auth.models import User
+from task_manager.users.models import CustomUser
 
 
 class UserModelChoiceField(forms.ModelChoiceField):
@@ -11,7 +11,7 @@ class UserModelChoiceField(forms.ModelChoiceField):
 
 class TaskForm(forms.ModelForm):
     executor = UserModelChoiceField(
-        queryset=User.objects.all(),
+        queryset=CustomUser.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
