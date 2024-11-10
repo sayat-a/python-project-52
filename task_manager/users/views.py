@@ -81,4 +81,7 @@ class UserDeleteView(CustomLoginRequiredMixin, DeleteView):
             )
             return redirect(self.success_url)
         response = super().form_valid(form)
+        messages.info(
+            self.request,
+            _("User is deleted successfully!"))
         return response
