@@ -1,6 +1,6 @@
 import django_filters
 from django import forms
-from django.contrib.auth.models import User
+from task_manager.users.models import CustomUser
 from django.db.models import Value
 from django.db.models.functions import Concat
 from django.forms import widgets
@@ -18,7 +18,7 @@ class TaskFilter(django_filters.FilterSet):
     )
 
     executor = django_filters.ModelChoiceFilter(
-        queryset=User.objects.all(),
+        queryset=CustomUser.objects.all(),
         label=_("Executor"),
         widget=widgets.Select(attrs={'class': 'form-select ml-2 mr-3 mb-3'}),
     )
@@ -48,6 +48,6 @@ class TaskFilter(django_filters.FilterSet):
 
     @property
     def executor_queryset(self):
-        return User.objects.annotate(
+        return CustomUser.objects.annotate(
             full_name=Concat('first_name', Value(' '), 'last_name')
         )
