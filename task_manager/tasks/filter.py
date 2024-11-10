@@ -1,8 +1,6 @@
 import django_filters
 from django import forms
 from task_manager.users.models import CustomUser
-from django.db.models import Value
-from django.db.models.functions import Concat
 from django.forms import widgets
 from django.utils.translation import gettext as _
 from task_manager.tasks.models import Task
@@ -45,9 +43,3 @@ class TaskFilter(django_filters.FilterSet):
         if value:
             return queryset.filter(creator=self.request.user)
         return queryset
-
-    @property
-    def executor_queryset(self):
-        return CustomUser.objects.annotate(
-            full_name=Concat('first_name', Value(' '), 'last_name')
-        )
