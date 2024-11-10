@@ -7,6 +7,9 @@ runserver:
 test:
 	poetry run python3 manage.py test
 
+coverage-test:
+	poetry run coverage run manage.py test
+
 translate:
 	poetry run django-admin makemessages -l ru
 
