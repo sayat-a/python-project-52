@@ -1,12 +1,12 @@
 from django.urls import reverse
 from django.test import TestCase
-from django.contrib.auth.models import User
+from task_manager.users.models import CustomUser
 from task_manager.statuses.models import Status
 
 
 class StatusCRUDTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
+        self.user = CustomUser.objects.create_user(
             username='testuser',
             password='password')
         self.client.login(username='testuser', password='password')
