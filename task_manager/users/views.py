@@ -13,7 +13,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import gettext as _
 from task_manager.users.models import CustomUser
 from task_manager.users.forms import SignUpForm, UserUpdateForm
-from django.db.models import ProtectedError
 
 
 # Create your views here.
