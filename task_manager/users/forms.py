@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from task_manager.users.models import CustomUser
 from django.utils.translation import gettext as _
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
@@ -45,7 +45,7 @@ class SignUpForm(UserCreationForm):
     )
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ('first_name',
                   'last_name',
                   'username',
@@ -71,7 +71,7 @@ class UserUpdateForm(forms.ModelForm):
     )
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ['first_name', 'last_name', 'username']
 
     def clean(self):
