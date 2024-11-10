@@ -7,7 +7,8 @@ from task_manager.users.models import CustomUser
 class TaskForm(forms.ModelForm):
     executor = forms.ModelChoiceField(
         queryset=CustomUser.objects.all(),
-        widget=forms.Select(attrs={'class': 'form-control'})
+        label=_("Executor"),
+        widget=forms.Select(attrs={'class': 'form-control'}),
     )
 
     class Meta:
