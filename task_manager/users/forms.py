@@ -1,72 +1,27 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from task_manager.users.models import CustomUser
-from django.utils.translation import gettext as _
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
-from django.contrib.auth.password_validation import validate_password
 
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(
-        max_length=255,
-        label=_("First Name"),
-        widget=forms.TextInput(attrs={'placeholder': _('First Name')})
-    )
-    last_name = forms.CharField(
-        max_length=255,
-        label=_("Last Name"),
-        widget=forms.TextInput(attrs={'placeholder': _('Last Name')})
-    )
-    username = forms.CharField(
-        max_length=150,
-        label=_("Username"),
-        required=True,
-        validators=[
-            RegexValidator(
-                regex=r'^[\w.@+-]+$',
-                message=_(
-                    'Insert right username. It may contain only letters, '
-                    'numbers, and @/./+/-/_ characters.'),
-            )
-        ],
-        widget=forms.TextInput(attrs={'placeholder': _('Username')})
-    )
-
-    password1 = forms.CharField(
-        label=_("Password"),
-        widget=forms.PasswordInput(attrs={'placeholder': _('Password')})
-    )
-
-    password2 = forms.CharField(
-        label=_("Confirm Password"),
-        widget=forms.PasswordInput(attrs={
-            'placeholder': _('Confirm Password')})
-    )
-
     class Meta:
         model = CustomUser
-        fields = ('first_name',
-                  'last_name',
-                  'username',
-                  'password1',
-                  'password2')
+        fields = (
+            'first_name',
+            'last_name',
+            'username',
+            'password1',
+            'password2'
+        )
 
 
-class UserUpdateForm(forms.ModelForm):
+class UserUpdateForm(SignUpForm):
     password1 = forms.CharField(
-        label=_("Password"),
-        widget=forms.PasswordInput(attrs={
-            'placeholder': _("Password"),
-            'class': 'form-control'}),
         required=True
     )
 
     password2 = forms.CharField(
-        label=_("Confirm Password"),
-        widget=forms.PasswordInput(attrs={
-            'placeholder': _("Confirm Password"),
-            'class': 'form-control'}),
         required=True
     )
 
@@ -74,30 +29,17 @@ class UserUpdateForm(forms.ModelForm):
         model = CustomUser
         fields = ['first_name', 'last_name', 'username']
 
-    def clean(self):
-        cleaned_data = super().clean()
-        password1 = cleaned_data.get("password1")
-        password2 = cleaned_data.get("password2")
-        self._validate_password_strength(password1)
-        self._check_passwords_match(password1, password2)
-        return cleaned_data
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        password = self.cleaned_data.get('password1')
-        if password:
-            user.set_password(password)
-        if commit:
-            user.save()
-        return user
-
-    def _validate_password_strength(self, password):
-        if password:
-            try:
-                validate_password(password, self.instance)
-            except ValidationError as e:
-                self.add_error('password2', e)
-
-    def _check_passwords_match(self, password1, password2):
-        if password1 and password2 and password1 != password2:
-            self.add_error('password2', _("Passwords are not equal."))
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        if CustomUser.objects.filter(username=username).exclude(
+                pk=self.instance.pk).exists():
+            self._update_errors(
+                ValidationError(
+                    {
+                        "username": self.instance.unique_error_message(
+                            self._meta.model, ["username"]
+                        )
+                    }
+                )
+            )
+        return username
