@@ -1,15 +1,15 @@
 from django.test import TestCase
 from django.urls import reverse
 from task_manager.tasks.models import Task
-from django.contrib.auth.models import User
+from task_manager.users.models import CustomUser
 from task_manager.statuses.models import Status
 
 
 class TaskCRUDTests(TestCase):
     def setUp(self):
-        self.user1 = User.objects.create_user(
+        self.user1 = CustomUser.objects.create_user(
             username='user1', password='password')
-        self.user2 = User.objects.create_user(
+        self.user2 = CustomUser.objects.create_user(
             username='user2', password='password')
         self.status = Status.objects.create(name='In Progress')
         self.client.login(username='user1', password='password')
