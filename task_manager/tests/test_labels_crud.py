@@ -1,12 +1,12 @@
 from django.urls import reverse
 from django.test import TestCase
-from django.contrib.auth.models import User
+from task_manager.users.models import CustomUser
 from task_manager.labels.models import Label
 
 
 class LabelCRUDTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
+        self.user = CustomUser.objects.create_user(
             username='testuser',
             password='password')
         self.client.login(username='testuser', password='password')
