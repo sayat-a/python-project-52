@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from task_manager.users.models import CustomUser
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext as _
 
 
 class SignUpForm(UserCreationForm):
@@ -18,10 +19,12 @@ class SignUpForm(UserCreationForm):
 
 class UserUpdateForm(SignUpForm):
     password1 = forms.CharField(
+        label=_('Password'),
         required=True
     )
 
     password2 = forms.CharField(
+        label=_("Confirm Password"),
         required=True
     )
 
