@@ -11,7 +11,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import gettext as _
-from django.contrib.auth.models import User
+from task_manager.users.models import CustomUser
 from task_manager.users.forms import SignUpForm, UserUpdateForm
 from django.db.models import ProtectedError
 
@@ -41,12 +41,12 @@ class SignUpView(SuccessMessageMixin, CreateView):
 
 
 class UsersListView(ListView):
-    model = User
+    model = CustomUser
     template_name = 'users/users_list.html'
     context_object_name = 'users'
 
     def get_queryset(self):
-        return User.objects.all().order_by('id')
+        return CustomUser.objects.all().order_by('id')
 
 
 class UserUpdateView(
@@ -54,7 +54,7 @@ class UserUpdateView(
     SuccessMessageMixin,
     UpdateView
 ):
-    model = User
+    model = CustomUser
     form_class = UserUpdateForm
     template_name = 'users/update.html'
     success_url = reverse_lazy('users')
@@ -72,7 +72,7 @@ class UserUpdateView(
 
 
 class UserDeleteView(CustomLoginRequiredMixin, DeleteView):
-    model = User
+    model = CustomUser
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users')
 
