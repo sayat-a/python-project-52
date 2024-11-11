@@ -5,7 +5,7 @@ from django.views.generic import (
     ListView,
     UpdateView,
     DeleteView
-    )
+)
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import login
