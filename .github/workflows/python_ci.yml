@@ -22,12 +22,12 @@ jobs:
       - name: Install dependencies
         run: |
             pip install poetry
-            make install
+            poetry install
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
         if: github.ref_name == 'main'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: coverage-test
+          coverageCommand: make coverage-test
           debug: true
