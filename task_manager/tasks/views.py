@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.utils.translation import gettext
+from django.utils.translation import gettext as _
 from django_filters.views import FilterView
 from task_manager.tasks.models import Task
 from task_manager.tasks.forms import TaskForm
@@ -40,7 +40,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         task.creator = self.request.user
         task.save()
         form.save_m2m()
-        messages.success(self.request, gettext("Task is successfully created"))
+        messages.success(self.request, _("Task is successfully created"))
         return super().form_valid(form)
 
 
@@ -49,20 +49,25 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = TaskForm
     template_name = 'tasks/task_form.html'
     success_url = reverse_lazy('tasks_list')
-    success_message = gettext("Task is successfully updated")
+    success_message = _("Task is successfully updated")
 
 
-class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class TaskDeleteView(
+    LoginRequiredMixin,
+    SuccessMessageMixin,
+    UserPassesTestMixin,
+    DeleteView
+):
     model = Task
     template_name = 'tasks/task_delete.html'
     success_url = reverse_lazy('tasks_list')
-    success_message = gettext("Task is successfully deleted")
+    success_message = _("Task is successfully deleted")
 
     def test_func(self):
         return self.request.user == self.get_object().creator
 
     def handle_no_permission(self):
-        messages.error(self.request, gettext(
+        messages.error(self.request, _(
             "Task can be deleted only by it's creator"))
         return redirect('tasks_list')
 
