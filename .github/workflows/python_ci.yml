@@ -37,4 +37,6 @@ jobs:
         run: ./cc-test-reporter format-coverage -t coverage.py -o coverage/codeclimate.json
 
       - name: Send coverage report
+        env:
+            CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         run: ./cc-test-reporter upload-coverage -i coverage/codeclimate.json
