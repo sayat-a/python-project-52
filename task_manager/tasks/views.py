@@ -13,7 +13,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
     DetailView
-    )
+)
 
 
 # Create your views here.
