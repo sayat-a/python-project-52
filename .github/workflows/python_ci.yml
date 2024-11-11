@@ -1,33 +1,37 @@
 name: hexlet-check
 
-on:
-  push:
-    branches:
-      - '**'
-    tags:
-      - '**'
+on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-    strategy:
-        matrix:
-          python-version: [3.11]
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-            python-version: ${{ matrix.python-version }}
+          python-version: '3.10'
+
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+
       - name: Install dependencies
+        run: poetry install
+
+      - name: Initialize Code Climate test reporter
         run: |
-            pip install poetry
-            poetry install
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v5.0.0
-        if: github.ref_name == 'main'
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
+
+      - name: Run tests with coverage
+        run: poetry run coverage run --source='.' manage.py test && poetry run coverage xml
+
+      - name: Upload coverage to Code Climate
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: make coverage-test
-          debug: true
+        run: ./cc-test-reporter format-coverage -t coverage.py -o coverage/codeclimate.json
+
+      - name: Send coverage report
+        run: ./cc-test-reporter upload-coverage -i coverage/codeclimate.json
