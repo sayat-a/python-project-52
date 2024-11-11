@@ -15,3 +15,6 @@ translate:
 
 complile_translation:
 	poetry run python manage.py compilemessages
+
+lint:
+	poetry run flake8
