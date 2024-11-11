@@ -30,6 +30,7 @@ jobs:
 
       - name: Upload coverage to Code Climate
         env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         run: ./cc-test-reporter format-coverage -t coverage.py -o coverage/codeclimate.json
 
