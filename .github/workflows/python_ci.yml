@@ -1,4 +1,4 @@
-name: hexlet-check
+name: python_ci
 
 on: [push, pull_request]
 
@@ -26,15 +26,10 @@ jobs:
           ./cc-test-reporter before-build
 
       - name: Run tests with coverage
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: poetry run coverage run --source='.' manage.py test && poetry run coverage xml
-      - name: Verify SECRET_KEY presence
-        run: |
-          if [ -z "$SECRET_KEY" ]; then
-            echo "SECRET_KEY is not set"
-            exit 1
-          else
-            echo "SECRET_KEY is set"
-          fi
+
       - name: Upload coverage to Code Climate
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
