@@ -10,7 +10,7 @@ from django.views.generic import (
     ListView,
     UpdateView,
     DeleteView
-    )
+)
 
 
 # Create your views here.
