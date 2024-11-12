@@ -8,7 +8,6 @@ from django.views.generic import (
 )
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth import login
 from django.utils.translation import gettext as _
 from task_manager.users.models import CustomUser
 from task_manager.users.forms import SignUpForm, UserUpdateForm
@@ -40,16 +39,6 @@ class UserUpdateView(
     template_name = 'users/update.html'
     success_url = reverse_lazy('users')
     success_message = _("User is updated successfully!")
-
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        form.instance = self.request.user
-        return form
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        login(self.request, self.object)
-        return response
 
 
 class UserDeleteView(
