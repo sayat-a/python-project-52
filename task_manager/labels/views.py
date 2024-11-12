@@ -13,7 +13,6 @@ from django.views.generic import (
 )
 
 
-# Create your views here.
 class LabelListView(ListView):
     model = Label
     template_name = 'labels/labels_list.html'
