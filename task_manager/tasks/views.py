@@ -16,7 +16,6 @@ from django.views.generic import (
 )
 
 
-# Create your views here.
 class TaskListView(FilterView):
     model = Task
     filterset_class = TaskFilter
