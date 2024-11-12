@@ -1,4 +1,3 @@
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -6,12 +5,12 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext as _
 from task_manager.users.models import CustomUser
 from task_manager.users.forms import SignUpForm, UserUpdateForm
 from task_manager.users.mixins import CustomLoginRequiredMixin, SelfCheckMixin
+from task_manager.mixins import DeletionCheckMixin
 
 
 class SignUpView(SuccessMessageMixin, CreateView):
@@ -44,21 +43,15 @@ class UserUpdateView(
 class UserDeleteView(
     CustomLoginRequiredMixin,
     SelfCheckMixin,
+    DeletionCheckMixin,
+    SuccessMessageMixin,
     DeleteView
 ):
     model = CustomUser
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users')
+    error_message = _("Cannot delete user because it is in use")
+    success_message = _("User is deleted successfully!")
 
-    def form_valid(self, form):
-        if self.get_object().task_set.exists():
-            messages.error(
-                self.request,
-                _("Cannot delete user because it is in use")
-            )
-            return redirect(self.success_url)
-        response = super().form_valid(form)
-        messages.info(
-            self.request,
-            _("User is deleted successfully!"))
-        return response
+    def has_dependencies(self, user):
+        return user.task_set.exists() or user.created_tasks.exists()
