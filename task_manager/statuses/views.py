@@ -1,7 +1,5 @@
 from task_manager.statuses.models import Status
 from django.urls import reverse_lazy
-from django.shortcuts import redirect
-from django.contrib import messages
 from django.utils.translation import gettext as _
 from django.contrib.messages.views import SuccessMessageMixin
 from task_manager.statuses.forms import StatusForm
@@ -11,9 +9,9 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+from task_manager.mixins import DeletionCheckMixin
 
 
-# Create your views here.
 class StatusListView(ListView):
     model = Status
     template_name = 'statuses/statuses_list.html'
@@ -36,18 +34,12 @@ class StatusUpdateView(SuccessMessageMixin, UpdateView):
     success_message = _("Status is successfully updated")
 
 
-class StatusDeleteView(SuccessMessageMixin, DeleteView):
+class StatusDeleteView(SuccessMessageMixin, DeletionCheckMixin, DeleteView):
     model = Status
     template_name = 'statuses/status_delete.html'
     success_url = reverse_lazy('statuses_list')
     success_message = _("Status is successfully deleted")
+    error_message = _("Cannot delete status because it is in use")
 
-    def form_valid(self, form):
-        if self.get_object().task_set.exists():
-            messages.error(
-                self.request,
-                _("Cannot delete status because it is in use")
-            )
-            return redirect(self.success_url)
-        response = super().form_valid(form)
-        return response
+    def has_dependencies(self, status):
+        return status.task_set.exists()
