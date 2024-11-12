@@ -33,13 +33,24 @@ class LabelUpdateView(SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('labels_list')
     success_message = _("Label is successfully updated")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_delete'] = False
+        return context
+
 
 class LabelDeleteView(SuccessMessageMixin, DeletionCheckMixin, DeleteView):
     model = Label
-    template_name = 'labels/label_delete.html'
+    template_name = 'labels/label_form.html'
     success_url = reverse_lazy('labels_list')
     success_message = _("Label is successfully deleted")
     error_message = _("Cannot delete label because it is in use")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_delete'] = True
+        context['cancel_url'] = self.success_url
+        return context
 
     def has_dependencies(self, label):
         return label.task_set.exists()
