@@ -33,13 +33,24 @@ class StatusUpdateView(SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('statuses_list')
     success_message = _("Status is successfully updated")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_delete'] = False
+        return context
+
 
 class StatusDeleteView(SuccessMessageMixin, DeletionCheckMixin, DeleteView):
     model = Status
-    template_name = 'statuses/status_delete.html'
+    template_name = 'statuses/status_form.html'
     success_url = reverse_lazy('statuses_list')
     success_message = _("Status is successfully deleted")
     error_message = _("Cannot delete status because it is in use")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_delete'] = True
+        context['cancel_url'] = self.success_url
+        return context
 
     def has_dependencies(self, status):
         return status.task_set.exists()
