@@ -22,24 +22,17 @@ class TaskListView(FilterView):
     template_name = 'tasks/tasks_list.html'
     context_object_name = 'tasks'
 
-    def get_filter(self, filterset_class):
-        filterset = super().get_filterset(filterset_class)
-        filterset.request = self.request
-        return filterset
 
-
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'tasks/task_form.html'
     success_url = reverse_lazy('tasks_list')
+    success_message = _("Task is successfully created")
 
     def form_valid(self, form):
         task = form.save(commit=False)
         task.creator = self.request.user
-        task.save()
-        form.save_m2m()
-        messages.success(self.request, _("Task is successfully created"))
         return super().form_valid(form)
 
 
