@@ -4,7 +4,6 @@ from task_manager.statuses.models import Status
 from task_manager.labels.models import Label
 
 
-# Create your models here.
 class Task(models.Model):
     name = models.CharField(max_length=255, unique=True, blank=False)
     description = models.TextField(blank=False)
