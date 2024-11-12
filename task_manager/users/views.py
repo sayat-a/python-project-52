@@ -15,7 +15,6 @@ from task_manager.users.models import CustomUser
 from task_manager.users.forms import SignUpForm, UserUpdateForm
 
 
-# Create your views here.
 class CustomLoginRequiredMixin(LoginRequiredMixin):
     permission_denied_message = _("You're not authenticated! Please, log in.")
     permission_check_message = _(
