@@ -9,26 +9,10 @@ from django.views.generic import (
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import login
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import gettext as _
 from task_manager.users.models import CustomUser
 from task_manager.users.forms import SignUpForm, UserUpdateForm
-
-
-class CustomLoginRequiredMixin(LoginRequiredMixin):
-    permission_denied_message = _("You're not authenticated! Please, log in.")
-    permission_check_message = _(
-        "You do not have permission to modify another user."
-    )
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(request, self.permission_denied_message)
-            return redirect('login')
-        if hasattr(self, 'get_object') and self.get_object() != request.user:
-            messages.error(request, self.permission_check_message)
-            return redirect('users')
-        return super().dispatch(request, *args, **kwargs)
+from task_manager.users.mixins import CustomLoginRequiredMixin
 
 
 class SignUpView(SuccessMessageMixin, CreateView):
@@ -67,7 +51,10 @@ class UserUpdateView(
         return response
 
 
-class UserDeleteView(CustomLoginRequiredMixin, DeleteView):
+class UserDeleteView(
+    CustomLoginRequiredMixin,
+    DeleteView
+):
     model = CustomUser
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users')
