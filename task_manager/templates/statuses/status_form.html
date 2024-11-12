@@ -1,16 +1,25 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n django_bootstrap5 %}
 
 {% block content %}
 <div class="container">
-    <h1>{% if form.instance.pk %}{% translate "Edit Status" %}{% else %}{% translate "Create Status" %}{% endif %}</h1>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group mb-3">
-            <label for="id_name" class="form-label d-block">{% trans "Name" %}</label>
-            {{ form.name }}
-        </div>
-        <button type="submit" class="btn btn-primary">{% if form.instance.pk %}{% translate "Update" %}{% else %}{% translate "Create" %}{% endif %}</button>
-    </form>
+    {% if is_delete %}
+        <h1>{% translate "Delete Status" %}</h1>
+        <p>{% translate "Are you sure you want to delete" %} "{{ object.name }}"?</p>
+    {% else %}    
+        <h1>{% if object.pk %}{% translate "Edit Status" %}{% else %}{% translate "Create Status" %}{% endif %}</h1>
+    {% endif %}
+        <form method="post">
+            {% csrf_token %}
+        {% if not is_delete %}
+            {% bootstrap_form form layout="vertical" %}
+            <button type="submit" class="btn btn-primary">
+                {% if object.pk %}{% translate "Update" %}{% else %}{% translate "Create" %}{% endif %}
+            </button>
+        {% else %}
+            <button type="submit" class="btn btn-danger">{% translate "Yes, delete" %}</button>
+            <a href="{{ cancel_url }}" class="btn btn-secondary">{% translate "Cancel" %}</a>
+        </form>
+        {% endif %}
 </div>
 {% endblock %}
