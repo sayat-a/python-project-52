@@ -16,9 +16,6 @@ class CustomLoginView(SuccessMessageMixin, LoginView):
     redirect_authenticated_user = True
     success_message = _('You have logged in.')
 
-    def form_valid(self, form):
-        return super().form_valid(form)
-
     def form_invalid(self, form):
         messages.error(self.request, _(
             'Please insert the correct username and password. '
