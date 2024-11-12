@@ -12,7 +12,7 @@ from django.contrib.auth import login
 from django.utils.translation import gettext as _
 from task_manager.users.models import CustomUser
 from task_manager.users.forms import SignUpForm, UserUpdateForm
-from task_manager.users.mixins import CustomLoginRequiredMixin
+from task_manager.users.mixins import CustomLoginRequiredMixin, SelfCheckMixin
 
 
 class SignUpView(SuccessMessageMixin, CreateView):
@@ -31,6 +31,7 @@ class UsersListView(ListView):
 
 class UserUpdateView(
     CustomLoginRequiredMixin,
+    SelfCheckMixin,
     SuccessMessageMixin,
     UpdateView
 ):
@@ -53,6 +54,7 @@ class UserUpdateView(
 
 class UserDeleteView(
     CustomLoginRequiredMixin,
+    SelfCheckMixin,
     DeleteView
 ):
     model = CustomUser
